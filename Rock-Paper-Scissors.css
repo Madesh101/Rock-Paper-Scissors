@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Syne+Mono&display=swap');
+
+:root {
+    --bg: #0f0f0f;
+    --surface: #1a1a1a;
+    --border: #2a2a2a;
+    --text: #f0ede8;
+    --text-muted: #555;
+    --accent: #f5c542;
+    --accent-dim: rgba(245, 197, 66, 0.10);
+    --win:  #4ade80;
+    --lose: #f87171;
+    --tie:  #94a3b8;
+    --radius: 14px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Body: CSS grid with 3 columns for the button row ── */
+body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 40px 20px;
+    text-align: center;
+
+    display: grid;
+    grid-template-columns: 108px 108px 108px;
+    grid-template-rows: auto auto auto auto auto auto;
+    column-gap: 20px;
+    row-gap: 0;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+}
+
+/* Row 1 — title spans all 3 columns */
+.title {
+    grid-column: 1 / 4;
+    grid-row: 1;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 36px;
+    margin-top: 0;
+}
+
+/* Row 2 — 3 buttons, one per column */
+.js-rock-button     { grid-column: 1; grid-row: 2; }
+.js-paper-button    { grid-column: 2; grid-row: 2; }
+.js-scissors-button { grid-column: 3; grid-row: 2; }
+
+/* Row 3 — result */
+.result {
+    grid-column: 1 / 4;
+    grid-row: 3;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    min-height: 38px;
+    margin-top: 36px;
+    margin-bottom: 16px;
+    transition: color .25s;
+}
+
+/* Row 4 — moves */
+.js-moves {
+    grid-column: 1 / 4;
+    grid-row: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    min-height: 64px;
+    margin-bottom: 32px;
+}
+
+.js-moves .move-icon {
+    height: 50px;
+    width: 50px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 50%;
+    padding: 7px;
+    object-fit: contain;
+}
+
+/* Row 5 — score */
+.score {
+    grid-column: 1 / 4;
+    grid-row: 5;
+    font-family: 'Syne Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 32px;
+    margin-bottom: 20px;
+}
+
+/* Row 6 — action buttons side by side */
+.reset-score-button {
+    grid-column: 1 / 2;
+    grid-row: 6;
+    justify-self: end;
+}
+.auto-play-button {
+    grid-column: 2 / 4;
+    grid-row: 6;
+    justify-self: start;
+}
+
+/* ── Move Button styles ──────────────────────────── */
+.js-rock-button,
+.js-paper-button,
+.js-scissors-button {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color .2s, transform .15s, box-shadow .2s, background .2s;
+}
+
+.js-rock-button:hover,
+.js-paper-button:hover,
+.js-scissors-button:hover {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(245, 197, 66, 0.18);
+}
+
+.js-rock-button:active,
+.js-paper-button:active,
+.js-scissors-button:active {
+    transform: translateY(-1px) scale(0.96);
+}
+
+.move-icon {
+    height: 52px;
+    width: 52px;
+    object-fit: contain;
+    display: block;
+    transition: transform .2s;
+}
+
+.js-rock-button:hover     .move-icon,
+.js-paper-button:hover    .move-icon,
+.js-scissors-button:hover .move-icon {
+    transform: scale(1.12);
+}
+
+/* ── Action Buttons ─────────────────────────────── */
+.reset-score-button,
+.auto-play-button {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 11px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all .15s;
+}
+
+.reset-score-button {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--text-muted);
+    margin-right: 6px;
+}
+.reset-score-button:hover {
+    border-color: var(--lose);
+    color: var(--lose);
+    background: rgba(248, 113, 113, 0.08);
+}
+
+.auto-play-button {
+    background: var(--accent);
+    border: 1.5px solid var(--accent);
+    color: #0f0f0f;
+    margin-left: 6px;
+}
+.auto-play-button:hover {
+    background: #ffd060;
+    border-color: #ffd060;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(245, 197, 66, 0.28);
+}
+.auto-play-button:active { transform: scale(0.97); }
